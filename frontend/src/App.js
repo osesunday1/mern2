@@ -5,9 +5,11 @@ function App() {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
 
+  const API_URL = process.env.REACT_APP_API_URL;
+
   // fetch messages
   useEffect(() => {
-    axios.get("http://localhost:5000/messages")
+    axios.get(`${API_URL}/messages`)
       .then(res => setMessages(res.data))
       .catch(err => console.error(err));
   }, []);
@@ -17,7 +19,7 @@ function App() {
     e.preventDefault();
     if (!text) return;
 
-    const res = await axios.post("http://localhost:5000/messages", { text });
+    const res = await axios.post(`${API_URL}/messages`, { text });
     setMessages([...messages, res.data]); // add new message
     setText(""); // reset input
   };
